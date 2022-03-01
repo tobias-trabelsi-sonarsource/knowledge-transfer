@@ -1,0 +1,17 @@
+galaxy_info:
+  author: Tobias Trabelsi
+  description: install zsh on a system
+  company: SonarSource
+
+  license: MIT
+
+  min_ansible_version: 2.1
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - 20.04
+        - 18.04
+    - name: Debian
+      versions:
+        - 10

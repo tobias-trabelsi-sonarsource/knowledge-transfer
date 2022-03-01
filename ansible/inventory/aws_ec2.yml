@@ -1,0 +1,23 @@
+plugin: aws_ec2
+iam_role_arn: 'arn:aws:iam::769899179661:role/SonarQubeAdminRole'
+
+regions:
+  - eu-west-1
+
+filters:
+  tag:Environmnent: 
+    - dev
+    - prod
+
+keyed_groups:
+  - key: tags['Name']
+    parent_group: 'demo'
+  - key: tags['Environmnent']
+    parent_group: 'demo'
+  - key: tags['OS']
+    parent_group: 'demo'
+
+
+strict_permissions: False
+hostnames:
+  - ip-address

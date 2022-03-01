@@ -1,0 +1,36 @@
+---
+# tasks file for provision-node
+
+- name: Load OS Specific Vars
+  include_vars: "{{ lookup('first_found', possible_files) }}"
+  vars:
+    possible_files:
+      - "../vars/{{ ansible_distribution }}.yml"
+  tags: [ 'install' ]
+
+- name: install packages
+  become: yes
+  package:
+    name: "{{ example_packages }}"
+    state: latest
+    update_cache: yes
+    cache_valid_time: 21600
+  tags: [ 'install' ]
+
+- name: deploy config
+  become: yes
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}" 
+    owner: "{{ ansible_user }}"
+    mode: '0644'
+  with_items:
+    - {src: zshrc.j2 , dest: "/home/{{ ansible_user }}/.zshrc" }
+  tags: [ 'install', 'configure' ]
+
+- name: change user shell to zsh 
+  become: yes
+  user:
+    name: "{{ ansible_user }}"
+    shell: /bin/zsh
+  tags: [ 'install', 'configure' ]

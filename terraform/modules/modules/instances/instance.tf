@@ -14,5 +14,6 @@ resource "aws_instance" "demo" {
   tags = {
     Name            = "demo-${var.USER}"
     Environmnent    = var.ENV
+    OS              = "Ubuntu"
   }
 }
