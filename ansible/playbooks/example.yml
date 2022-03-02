@@ -1,3 +1,4 @@
+---
 - name: example 
   hosts: demo
   gather_facts: True

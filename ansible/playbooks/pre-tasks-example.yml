@@ -1,0 +1,20 @@
+---
+- name: pre and post tasks example
+  hosts: demo
+  pre_tasks:
+    - name : install dependencies before starting
+      become: yes
+      apt:
+         name: 
+          - nodejs
+          - npm
+          - git
+         state: latest
+         update_cache: yes
+  roles:
+    - provision-node
+  post_tasks:
+      - name: notify that the servers have been updated 
+        debug:
+          msg: "{{ inventory_hostname }} has been provisioned"
+        delegate_to: localhost
