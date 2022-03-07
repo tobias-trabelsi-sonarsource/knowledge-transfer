@@ -1,0 +1,34 @@
+prometheus:
+  enabled: true
+  additionalPodMonitors:
+    - name: "sonarqube"
+      selector:
+        matchLabels:
+          app: sonarqube
+      namespaceSelector:
+        matchNames:
+          - "test"
+      podMetricsEndpoints:
+        - targetPort: "monitoring-ce"
+          interval: "30s"
+          path: "/"
+          scheme: "http"
+        - targetPort: "monitoring-web"
+          interval: "30s"
+          path: "/"
+          scheme: "http"
+    - name: "mmf-2020"
+      selector:
+        matchLabels:
+          app: sonarqube
+      namespaceSelector:
+        matchNames:
+          - "test"
+      podMetricsEndpoints:
+        - targetPort: "http"
+          interval: "30s"
+          path: "/sonarqube/api/monitoring/metrics"
+          scheme: "http"
+          bearerTokenSecret:
+            name: "bearer-token"
+            key: "token"
